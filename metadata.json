@@ -1,0 +1,7 @@
+{
+  "name": "Aura Personal Branding Studio",
+  "description": "A sophisticated AI-powered personal branding architect that generates professional bios, content strategies, and brand visual concepts using Gemini models.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
