@@ -28,7 +28,7 @@ const App: React.FC = () => {
       setLoadingState(LoadingState.COMPLETED);
     } catch (err) {
       console.error(err);
-      setError("An error occurred while building your brand identity. Please check your API key and try again.");
+      setError("An error occurred while building your brand identity. Please try again later.");
       setLoadingState(LoadingState.ERROR);
     }
   };

@@ -3,10 +3,12 @@ import { GoogleGenAI, Type } from "@google/genai";
 import { UserInput, BrandStrategy } from "../types";
 
 export const generateBrandStrategy = async (input: UserInput): Promise<BrandStrategy> => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+  // Always use the named parameter and direct process.env.API_KEY reference
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   
   const response = await ai.models.generateContent({
-    model: "gemini-3-flash-preview",
+    // Use gemini-3-pro-preview for complex reasoning tasks like brand strategy synthesis
+    model: "gemini-3-pro-preview",
     contents: `Generate a comprehensive personal brand strategy for:
       Name: ${input.name}
       Industry: ${input.industry}
@@ -53,13 +55,16 @@ export const generateBrandStrategy = async (input: UserInput): Promise<BrandStra
     }
   });
 
+  // Access the text property directly (not a method)
   return JSON.parse(response.text.trim());
 };
 
 export const generateBrandImage = async (prompt: string): Promise<string> => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+  // Always use the named parameter and direct process.env.API_KEY reference
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   
   const response = await ai.models.generateContent({
+    // gemini-2.5-flash-image is used for image generation tasks
     model: 'gemini-2.5-flash-image',
     contents: {
       parts: [
@@ -73,6 +78,7 @@ export const generateBrandImage = async (prompt: string): Promise<string> => {
     }
   });
 
+  // Iterate through response parts to find the inlineData (image) part
   for (const part of response.candidates?.[0]?.content.parts || []) {
     if (part.inlineData) {
       return `data:image/png;base64,${part.inlineData.data}`;
